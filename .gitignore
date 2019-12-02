@@ -1,0 +1,5 @@
+.env
+vendor
+bin
+c4-customer.iml
+wire_gen.go
