@@ -6,6 +6,7 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -17,7 +18,7 @@ func main() {
 	session, err := SetupPostgres()
 	if err != nil {
 		fmt.Println(err.Error())
-		panic("Erro to start MongoDB")
+		panic("Erro to start Postgres")
 	}
 
 	defer session.Close()
@@ -35,11 +36,10 @@ func main() {
 
 	srv := &http.Server{
 		Handler:      router,
-		Addr:         ":8080",
+		Addr:         ":" + os.Getenv("PORT"),
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
 	log.Fatal(srv.ListenAndServe())
 }
-

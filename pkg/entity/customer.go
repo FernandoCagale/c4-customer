@@ -7,5 +7,5 @@ type Customer struct {
 	Name   string         `json:"name"`
 	Email  string         `json:"orders"`
 	Phone  string         `json:"phone"`
-	Notify pq.StringArray `json:"notify",gorm:"type:varchar(64)[]"`
+	Notify pq.StringArray `gorm:"type:varchar(64)[]",json:"notify"`
 }
