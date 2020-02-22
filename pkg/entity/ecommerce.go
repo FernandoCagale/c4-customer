@@ -7,14 +7,13 @@ import (
 type Ecommerce struct {
 	Code   string   `json:"code"`
 	Name   string   `json:"name"`
-	Email  string   `json:"orders"`
+	Email  string   `json:"email"`
 	Phone  string   `json:"phone"`
 	Notify []string `json:"notify"`
 }
 
 func (e Ecommerce) Validate() error {
-	return validation.ValidateStruct(&e,
-	)
+	return validation.ValidateStruct(&e, )
 }
 
 func (e Ecommerce) ToCustomer() Customer {

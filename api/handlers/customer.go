@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/FernandoCagale/c4-customer/api/render"
 	"github.com/FernandoCagale/c4-customer/internal/errors"
 	"github.com/FernandoCagale/c4-customer/pkg/domain/customer"
@@ -21,8 +22,13 @@ func NewCustomer(usecase customer.UseCase) *CustomerHandler {
 }
 
 func (handler *CustomerHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+	for k, v := range r.Header {
+		fmt.Println("Header field %q, Value %q\n", k, v)
+	}
+
 	customers, err := handler.usecase.FindAll()
 	if err != nil {
+		fmt.Println(err.Error())
 		render.ResponseError(w, err, http.StatusInternalServerError)
 		return
 	}
@@ -37,6 +43,7 @@ func (handler *CustomerHandler) FindById(w http.ResponseWriter, r *http.Request)
 
 	customer, err := handler.usecase.FindById(ID)
 	if err != nil {
+		fmt.Println(err.Error())
 		switch err {
 		case errors.ErrNotFound:
 			render.ResponseError(w, err, http.StatusNotFound)

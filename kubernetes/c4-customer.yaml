@@ -22,10 +22,10 @@ items:
     labels:
       app: c4-customer
   data:
-    AMQP_URI: "amqp://guest:guest@rabbitmq:5672"
-    POSTGRES_ADDRS: "postgresql://postgres:postgres@bold-bunny-postgresql.database.svc.cluster.local:5432?sslmode=disable"
+    AMQP_URI: "amqp://guest:guest@rabbitmq.message.svc.cluster.local:5672/"
+    POSTGRES_ADDRS: "postgresql://postgres:pgpassword@postgres-postgresql.database.svc.cluster.local:5432?sslmode=disable"
     PORT: "8080"
-- apiVersion: extensions/v1beta1
+- apiVersion: apps/v1
   kind: Deployment
   metadata:
     name: c4-customer
@@ -34,6 +34,9 @@ items:
       app: c4-customer
   spec:
     replicas: 1
+    selector:
+      matchLabels:
+        app: c4-customer
     template:
       metadata:
         labels:

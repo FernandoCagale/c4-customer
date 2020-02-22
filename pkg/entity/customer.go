@@ -3,9 +3,9 @@ package entity
 import "github.com/lib/pq"
 
 type Customer struct {
-	Code   string         `json:"code"`
+	Code   string         `json:"code" gorm:"primary_key"`
 	Name   string         `json:"name"`
-	Email  string         `json:"orders"`
+	Email  string         `json:"email"`
 	Phone  string         `json:"phone"`
-	Notify pq.StringArray `gorm:"type:varchar(64)[]",json:"notify"`
+	Notify pq.StringArray `json:"notify" gorm:"type:varchar(64)[]"`
 }

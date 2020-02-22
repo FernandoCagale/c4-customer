@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	TOPIC = "topic.customer"
-	QUEUE = "customer"
+	CUSTOMER_QUEUE = "customer-registered"
 )
 
 type CustomerEvent struct {
@@ -27,7 +26,7 @@ func NewCustomer(usecase customer.UseCase, event event.Event) *CustomerEvent {
 }
 
 func (eventCustomer *CustomerEvent) ProcessCustomer() {
-	messages, err := eventCustomer.event.Subscribe(TOPIC, QUEUE)
+	messages, err := eventCustomer.event.SubscribeQueue(CUSTOMER_QUEUE)
 	if err != nil {
 		fmt.Println(err.Error())
 	}

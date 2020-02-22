@@ -6,6 +6,8 @@ import (
 	"github.com/FernandoCagale/c4-customer/pkg/entity"
 )
 
+const QUEUE = "notify.customer"
+
 type CustomerUseCase struct {
 	repo  Repository
 	event event.Event
@@ -42,7 +44,9 @@ func (usecase *CustomerUseCase) Create(e *entity.Ecommerce) error {
 		return err
 	}
 
-	//TODO notify
+	if err := usecase.event.PublishQueue(QUEUE, e); err != nil {
+		return err
+	}
 
 	return nil
 }
