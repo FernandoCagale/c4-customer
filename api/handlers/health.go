@@ -13,8 +13,6 @@ import (
 type HealthHandler struct {
 }
 
-
-
 func NewHealth() *HealthHandler {
 	return &HealthHandler{}
 }

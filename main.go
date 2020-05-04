@@ -23,12 +23,16 @@ func main() {
 
 	defer session.Close()
 
+	events, err := SetupEvents(session)
+	if err != nil {
+		panic("Erro to start Events")
+	}
+	events.MakeEvents()
+
 	app, err := SetupApplication(session)
 	if err != nil {
 		panic("Erro to start application")
 	}
-
-	go app.MakeEvents()
 
 	router := app.MakeHandlers()
 

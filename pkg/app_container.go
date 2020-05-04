@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	eventBoot "github.com/FernandoCagale/c4-customer/api/event"
 	"github.com/FernandoCagale/c4-customer/api/handlers"
 	"github.com/FernandoCagale/c4-customer/api/routers"
 	"github.com/FernandoCagale/c4-customer/internal/event"
@@ -9,4 +8,4 @@ import (
 	"github.com/google/wire"
 )
 
-var Container = wire.NewSet(customer.Set, handlers.Set, routers.Set, event.Set, eventBoot.Set)
+var Container = wire.NewSet(customer.Set, handlers.Set, routers.Set, event.Set)

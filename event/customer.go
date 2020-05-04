@@ -18,6 +18,10 @@ type CustomerEvent struct {
 	event   event.Event
 }
 
+func (event *CustomerEvent) MakeEvents() {
+	go event.processCustomer()
+}
+
 func NewCustomer(usecase customer.UseCase, event event.Event) *CustomerEvent {
 	return &CustomerEvent{
 		usecase: usecase,
@@ -25,7 +29,8 @@ func NewCustomer(usecase customer.UseCase, event event.Event) *CustomerEvent {
 	}
 }
 
-func (eventCustomer *CustomerEvent) ProcessCustomer() {
+func (eventCustomer *CustomerEvent) processCustomer() {
+
 	messages, err := eventCustomer.event.SubscribeQueue(CUSTOMER_QUEUE)
 	if err != nil {
 		fmt.Println(err.Error())

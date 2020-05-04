@@ -83,15 +83,6 @@ func (o *EventRepository) PublishQueue(topic string, payload interface{}) (error
 		return err
 	}
 
-	msg.Metadata.Set("x-request-id", "80f198ee56343ba864fe8b2a57d3eff7")
-	msg.Metadata.Set("x-b3-traceid", "80f198ee56343ba864fe8b2a57d3eff7")
-	msg.Metadata.Set("x-b3-spanid", "e457b5a2e4d86bd1")
-	msg.Metadata.Set("x-b3-parentspanid", "05e3ac9a4f6e3b90")
-	msg.Metadata.Set("x-b3-sampled", "1")
-	msg.Metadata.Set("x-b3-flags", "1")
-	msg.Metadata.Set("x-ot-span-context", "1")
-
-
 	err = publisher.Publish(topic, msg)
 	if err != nil {
 		return err

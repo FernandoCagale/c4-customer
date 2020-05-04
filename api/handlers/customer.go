@@ -22,8 +22,31 @@ func NewCustomer(usecase customer.UseCase) *CustomerHandler {
 }
 
 func (handler *CustomerHandler) FindAll(w http.ResponseWriter, r *http.Request) {
-	for k, v := range r.Header {
-		fmt.Println("Header field %q, Value %q\n", k, v)
+
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", "http://c4-notify:8080/health", nil)
+
+	incomingHeaders := []string{
+		"x-request-id",
+		"x-b3-traceid",
+		"x-b3-spanid",
+		"x-b3-sampled",
+		//"x-b3-flags",
+		//"x-b3-parentspanid",
+		//"x-ot-span-context",
+	}
+	for _, th := range incomingHeaders {
+		req.Header.Set(th, r.Header.Get(th))
+	}
+
+	//for k, v := range r.Header {
+	//	fmt.Println("Header field "+ k +" Value " + v[0])
+	//	req.Header.Set(k, v[0])
+	//}
+
+	_, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err.Error())
 	}
 
 	customers, err := handler.usecase.FindAll()

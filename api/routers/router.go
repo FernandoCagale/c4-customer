@@ -1,22 +1,13 @@
 package routers
 
 import (
-	"github.com/FernandoCagale/c4-customer/api/event"
 	"github.com/FernandoCagale/c4-customer/api/handlers"
 	"github.com/gorilla/mux"
-	"time"
 )
 
 type SystemRoutes struct {
 	healthHandler   *handlers.HealthHandler
 	customerHandler *handlers.CustomerHandler
-	customerEvent   *event.CustomerEvent
-}
-
-func (routes *SystemRoutes) MakeEvents() {
-	time.Sleep(5 * time.Second)
-
-	routes.customerEvent.ProcessCustomer()
 }
 
 func (routes *SystemRoutes) MakeHandlers() *mux.Router {
@@ -31,10 +22,9 @@ func (routes *SystemRoutes) MakeHandlers() *mux.Router {
 	return r
 }
 
-func NewSystem(healthHandler *handlers.HealthHandler, customerHandler *handlers.CustomerHandler, customerEvent *event.CustomerEvent) *SystemRoutes {
+func NewSystem(healthHandler *handlers.HealthHandler, customerHandler *handlers.CustomerHandler) *SystemRoutes {
 	return &SystemRoutes{
 		healthHandler:   healthHandler,
 		customerHandler: customerHandler,
-		customerEvent:   customerEvent,
 	}
 }
