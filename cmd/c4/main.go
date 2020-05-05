@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/FernandoCagale/c4-customer/api/middleware"
 	"github.com/joho/godotenv"
 	"log"
@@ -17,7 +16,6 @@ func init() {
 func main() {
 	session, err := SetupPostgres()
 	if err != nil {
-		fmt.Println(err.Error())
 		panic("Erro to start Postgres")
 	}
 
