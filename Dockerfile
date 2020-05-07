@@ -10,6 +10,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o bin/application cmd/c4/main.go cmd/c4/w
 
 ## Run Image
 FROM scratch
-COPY --from=builder /c4-customer/cmd/c4/bin/application application
+COPY --from=builder /c4-customer/bin/application application
 EXPOSE 8080
 ENTRYPOINT ["./application"]
