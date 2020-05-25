@@ -1,4 +1,8 @@
-**c4-customer - docker**
+#c4-customer
+
+## Flow [c4-kustomize](https://github.com/FernandoCagale/c4-kustomize)
+
+##Dependencies
 
 `Docker Mongodb`
 
@@ -12,20 +16,21 @@ $ docker run --network host --name mongo -d mongo
 $ docker run --network host --name rabbit -d rabbitmq
 ```
 
-`Docker build c4-customer`
+##Build Docker
+
+`build and publish c4-customer`
 
 ```sh
-$   docker build -t c4-customer .
+$   ./scripts/publish
 ```
 
-`Docker c4-customer`
+##Kubernetes [YAML](https://github.com/FernandoCagale/c4-kustomize/tree/master/c4-customer/base)
 
-```sh
-$   docker run -d --name c4-customer -p 8080:8080 c4-customer
-```
+    *   deployment.yaml
+    *   service.yaml
+    *   virtualservice.yaml
 
-**c4-customer - local**
-
+##Running local
 
 ```sh
 $   go mod download
@@ -41,19 +46,6 @@ $   go mod vendor
 $   go get -u github.com/google/wire/cmd/wire
 ```
 
-`generate wire_gen.go`
-
 ```sh
-$   wire
-```
-
-`generate build`
-
-```sh
-$   go build -o bin/application
-```
-
-
-```sh
-$   ./bin/application
+$   ./scripts/start.sh
 ```
