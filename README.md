@@ -1,6 +1,4 @@
-# c4-customer
-
-## Flow [c4-kustomize](https://github.com/FernandoCagale/c4-kustomize)
+# c4-customer [Flow](https://github.com/FernandoCagale/c4-kustomize)
 
 ## Dependencies
 
