@@ -21,7 +21,7 @@ $ docker run --network host --name rabbit -d rabbitmq
 `build and publish c4-customer`
 
 ```sh
-$   ./scripts/publish
+$   ./scripts/publish.sh
 ```
 
 ## Kubernetes [YAML](https://github.com/FernandoCagale/c4-kustomize/tree/master/c4-customer/base)
