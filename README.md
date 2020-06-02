@@ -1,34 +1,37 @@
 # c4-customer [Flow](https://github.com/FernandoCagale/c4-kustomize)
 
-## Dependencies
+### Docker
 
-`Docker Mongodb`
+`running dockerlink multi-stage builds and publish c4-customer`
 
 ```sh
-$ docker run --network host --name mongo -d mongo
+$   ./scripts/publish.sh
+```
+
+### Kubernetes and Istio - [YAML](https://github.com/FernandoCagale/c4-kustomize/tree/master/c4-customer/base)
+
+    *   deployment.yaml
+    *   service.yaml
+    *   virtualservice.yaml
+
+# Running local
+
+### Dependencies [docker-compose](https://github.com/FernandoCagale/c4-kustomize/blob/master/docker-compose.yml)
+
+`Docker Postgres`
+
+```sh
+$ docker run --network host --name postgres -e POSTGRES_USER=pguser -e POSTGRES_PASSWORD=pgpassword -e POSTGRES_DB=c4-customer-database -d postgres
 ```
 
 `Docker Rabbitmq`
 
 ```sh
 $ docker run --network host --name rabbit -d rabbitmq
+
 ```
 
-## Build Docker
-
-`build and publish c4-customer`
-
-```sh
-$   ./scripts/publish.sh
-```
-
-## Kubernetes [YAML](https://github.com/FernandoCagale/c4-kustomize/tree/master/c4-customer/base)
-
-    *   deployment.yaml
-    *   service.yaml
-    *   virtualservice.yaml
-
-## Running local
+### Standard Go Project [Layout](https://github.com/golang-standards/project-layout)
 
 ```sh
 $   go mod download
@@ -38,7 +41,7 @@ $   go mod download
 $   go mod vendor
 ```
 
-`download wire "dependency injection"`
+`download "dependency injection"` [wire](https://github.com/google/wire)
 
 ```sh
 $   go get -u github.com/google/wire/cmd/wire
