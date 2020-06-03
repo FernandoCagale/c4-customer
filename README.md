@@ -2,7 +2,7 @@
 
 ### Docker
 
-`running dockerlink multi-stage builds and publish c4-customer`
+`running docker multi-stage builds and publish c4-customer`
 
 ```sh
 $   ./scripts/publish.sh
