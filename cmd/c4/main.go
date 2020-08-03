@@ -21,13 +21,20 @@ func main() {
 
 	defer session.Close()
 
-	events, err := SetupEvents(session)
+	client, err := SetupClientGRPC()
+	if err != nil {
+		panic("Erro to start GRPC")
+	}
+
+	defer client.Close()
+
+	events, err := SetupEvents(session, client)
 	if err != nil {
 		panic("Erro to start Events")
 	}
 	events.MakeEvents()
 
-	app, err := SetupApplication(session)
+	app, err := SetupApplication(session, client)
 	if err != nil {
 		panic("Erro to start application")
 	}

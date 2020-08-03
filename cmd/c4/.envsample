@@ -1,3 +1,4 @@
 AMQP_URI=amqp://guest:guest@localhost:5672/
 POSTGRES_ADDRS=postgresql://pguser:pgpassword@127.0.0.1:5432/c4-customer-database?sslmode=disable
+GRPC=:9999
 PORT=8083

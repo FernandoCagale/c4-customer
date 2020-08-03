@@ -5,23 +5,22 @@ import (
 )
 
 type Ecommerce struct {
-	Code   string   `json:"code"`
-	Name   string   `json:"name"`
-	Email  string   `json:"email"`
-	Phone  string   `json:"phone"`
-	Notify []string `json:"notify"`
+	Code  string `json:"code"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Phone string `json:"phone"`
 }
 
 func (e Ecommerce) Validate() error {
 	return validation.ValidateStruct(&e, )
 }
 
-func (e Ecommerce) ToCustomer() Customer {
+func (e Ecommerce) ToCustomer(notify []string) Customer {
 	return Customer{
 		Code:   e.Code,
 		Name:   e.Name,
 		Email:  e.Email,
 		Phone:  e.Phone,
-		Notify: e.Notify,
+		Notify: notify,
 	}
 }

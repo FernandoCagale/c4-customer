@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package grpc;
+
+service Notify {
+  rpc GetNotify (Request) returns (Reply) {}
+}
+
+message Request {}
+
+message Reply {
+  repeated string types = 1;
+}

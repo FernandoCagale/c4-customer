@@ -3,20 +3,23 @@ package customer
 import (
 	"github.com/FernandoCagale/c4-customer/internal/errors"
 	"github.com/FernandoCagale/c4-customer/internal/event"
+	notify "github.com/FernandoCagale/c4-customer/internal/notify"
 	"github.com/FernandoCagale/c4-customer/pkg/entity"
 )
 
 const QUEUE = "notify.customer"
 
 type CustomerUseCase struct {
-	repo  Repository
-	event event.Event
+	repo   Repository
+	event  event.Event
+	notify notify.Notify
 }
 
-func NewUseCase(repo Repository, event event.Event) *CustomerUseCase {
+func NewUseCase(repo Repository, event event.Event, notify notify.Notify) *CustomerUseCase {
 	return &CustomerUseCase{
-		repo:  repo,
-		event: event,
+		repo:   repo,
+		event:  event,
+		notify: notify,
 	}
 }
 
@@ -38,7 +41,12 @@ func (usecase *CustomerUseCase) Create(e *entity.Ecommerce) error {
 		return errors.ErrInvalidPayload
 	}
 
-	customer := e.ToCustomer()
+	notify, err := usecase.notify.GetNotify()
+	if err != nil {
+		return err
+	}
+
+	customer := e.ToCustomer(notify)
 
 	if err = usecase.repo.Create(&customer); err != nil {
 		return err
