@@ -6,7 +6,7 @@ WORKDIR /c4-customer
 RUN go get github.com/google/wire/cmd/wire
 RUN wire ./...
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -o bin/application cmd/c4-http/main.go cmd/c4-http/wire_gen.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/application cmd/c4-grpc/main.go cmd/c4-grpc/wire_gen.go
 
 ## Run Image
 FROM scratch

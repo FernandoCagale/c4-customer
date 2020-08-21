@@ -1,5 +1,5 @@
 package notify
 
 type Notify interface {
-	GetNotify() ([]string, error)
+	GetNotify(headers map[string]string) ([]string, error)
 }
