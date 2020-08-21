@@ -4,33 +4,30 @@
 
 ### Docker
 
-`running docker multi-stage builds and publish c4-customer`
+`running docker multi-stage builds and publish c4-type to HTTP and gRPC`
 
 ```sh
-$   ./scripts/publish.sh
+$   ./scripts/publish-grpc.sh
+```
+
+```sh
+$   ./scripts/publish-http.sh
 ```
 
 ### Kubernetes and Istio - [YAML](https://github.com/FernandoCagale/c4-kustomize/tree/master/c4-customer/base)
 
-    *   deployment.yaml
+    *   deployment-v1.yaml
+    *   deployment-v2.yaml
     *   service.yaml
+    *   destinationrule.yaml
     *   virtualservice.yaml
 
 # Running local
 
 ### Dependencies [docker-compose](https://github.com/FernandoCagale/c4-kustomize/blob/master/docker-compose.yml)
 
-`Docker Postgres`
-
 ```sh
-$ docker run --network host --name postgres -e POSTGRES_USER=pguser -e POSTGRES_PASSWORD=pgpassword -e POSTGRES_DB=c4-customer-database -d postgres
-```
-
-`Docker Rabbitmq`
-
-```sh
-$ docker run --network host --name rabbit -d rabbitmq
-
+$   docker-compose up -d
 ```
 
 ### Standard Go Project [Layout](https://github.com/golang-standards/project-layout)
