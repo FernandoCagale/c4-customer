@@ -4,7 +4,7 @@ set -e
 
 [ -z "$DEBUG" ] || set -x
 
-cd cmd/c4
+cd cmd/c4-grpc
 
 echo "===> Generate wire...\n"
 

@@ -10,8 +10,8 @@ docker build --no-cache -t c4-customer .
 
 echo "\n===> Docker tag...\n"
 
-docker tag c4-customer fernandocagale/c4-customer
+docker tag c4-customer fernandocagale/c4-customer:v2
 
 echo "\n===> Docker push...\n"
 
-docker push fernandocagale/c4-customer
+docker push fernandocagale/c4-customer:v2

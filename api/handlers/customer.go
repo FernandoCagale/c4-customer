@@ -22,33 +22,6 @@ func NewCustomer(usecase customer.UseCase) *CustomerHandler {
 }
 
 func (handler *CustomerHandler) FindAll(w http.ResponseWriter, r *http.Request) {
-
-	client := &http.Client{}
-	req, _ := http.NewRequest("GET", "http://c4-notify:8080/health", nil)
-
-	incomingHeaders := []string{
-		"x-request-id",
-		"x-b3-traceid",
-		"x-b3-spanid",
-		"x-b3-sampled",
-		//"x-b3-flags",
-		//"x-b3-parentspanid",
-		//"x-ot-span-context",
-	}
-	for _, th := range incomingHeaders {
-		req.Header.Set(th, r.Header.Get(th))
-	}
-
-	//for k, v := range r.Header {
-	//	fmt.Println("Header field "+ k +" Value " + v[0])
-	//	req.Header.Set(k, v[0])
-	//}
-
-	_, err := client.Do(req)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
 	customers, err := handler.usecase.FindAll()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -109,7 +82,7 @@ func (handler *CustomerHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	if err := handler.usecase.Create(ecommerce); err != nil {
+	if err := handler.usecase.Create(forwardHeaders(r), ecommerce); err != nil {
 		switch err {
 		case errors.ErrInvalidPayload:
 			render.ResponseError(w, err, http.StatusBadRequest)
@@ -122,4 +95,29 @@ func (handler *CustomerHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.Response(w, nil, http.StatusCreated)
+}
+
+func forwardHeaders(r *http.Request) map[string]string {
+	incomingHeaders := []string{
+		"x-version",
+
+		// open tracing
+		"x-request-id",
+		"x-b3-traceid",
+		"x-b3-spanid",
+		"x-b3-parentspanid",
+		"x-b3-sampled",
+		"x-b3-flags",
+		"x-ot-span-context",
+	}
+
+	headers := make(map[string]string)
+	for _, th := range incomingHeaders {
+		h := r.Header.Get(th)
+		if h != "" {
+			headers[th] = h
+		}
+	}
+
+	return headers
 }

@@ -3,7 +3,7 @@ package grpc
 import (
 	"context"
 	"google.golang.org/grpc"
-	"time"
+	"google.golang.org/grpc/metadata"
 )
 
 type NotifyGRPC struct {
@@ -16,12 +16,10 @@ func NewNotifyGRPC(client *grpc.ClientConn) *NotifyGRPC {
 	}
 }
 
-func (notify *NotifyGRPC) GetNotify() ([]string, error) {
+func (notify *NotifyGRPC) GetNotify(headers map[string]string,) ([]string, error) {
 	client := NewNotifyClient(notify.client)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-
-	defer cancel()
+	ctx := metadata.NewOutgoingContext(context.Background(), metadata.New(headers))
 
 	result, err := client.GetNotify(ctx, &Request{})
 	if err != nil {

@@ -2,24 +2,23 @@ package customer
 
 import (
 	"github.com/FernandoCagale/c4-customer/internal/errors"
-	"github.com/FernandoCagale/c4-customer/internal/event"
-	notify "github.com/FernandoCagale/c4-customer/internal/notify"
+	"github.com/FernandoCagale/c4-customer/internal/notify"
 	"github.com/FernandoCagale/c4-customer/pkg/entity"
 )
 
-const QUEUE = "notify.customer"
+const CUSTOMER_TOPIC = "customer.registered"
 
 type CustomerUseCase struct {
-	repo   Repository
-	event  event.Event
-	notify notify.Notify
+	repo     Repository
+	producer Producer
+	notify   notify.Notify
 }
 
-func NewUseCase(repo Repository, event event.Event, notify notify.Notify) *CustomerUseCase {
+func NewUseCase(repo Repository, producer Producer, notify notify.Notify) *CustomerUseCase {
 	return &CustomerUseCase{
-		repo:   repo,
-		event:  event,
-		notify: notify,
+		repo:     repo,
+		producer: producer,
+		notify:   notify,
 	}
 }
 
@@ -35,13 +34,13 @@ func (usecase *CustomerUseCase) DeleteById(ID string) (err error) {
 	return usecase.repo.DeleteById(ID)
 }
 
-func (usecase *CustomerUseCase) Create(e *entity.Ecommerce) error {
+func (usecase *CustomerUseCase) Create(headers map[string]string, e *entity.Ecommerce) error {
 	err := e.Validate()
 	if err != nil {
 		return errors.ErrInvalidPayload
 	}
 
-	notify, err := usecase.notify.GetNotify()
+	notify, err := usecase.notify.GetNotify(headers)
 	if err != nil {
 		return err
 	}
@@ -52,7 +51,7 @@ func (usecase *CustomerUseCase) Create(e *entity.Ecommerce) error {
 		return err
 	}
 
-	if err := usecase.event.PublishQueue(QUEUE, e); err != nil {
+	if err := usecase.producer.Producer(CUSTOMER_TOPIC, customer); err != nil {
 		return err
 	}
 
