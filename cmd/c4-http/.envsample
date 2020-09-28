@@ -1,4 +1,4 @@
 ADDRESS_KAFKA=localhost:9092
 ADDRESS_TYPE_HTTP=http://localhost:8086
 POSTGRES_ADDRS=postgresql://pguser:pgpassword@127.0.0.1:5432/c4-customer-database?sslmode=disable
-PORT=8083
+PORT=8082

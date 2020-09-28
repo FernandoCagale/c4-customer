@@ -41,7 +41,7 @@ func main() {
 
 	router := app.MakeHandlers()
 
-	router.Use(middleware.Header)
+	router.Use(middleware.Header, middleware.Logging)
 
 	srv := &http.Server{
 		Handler:      router,
